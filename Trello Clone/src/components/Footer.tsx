@@ -4,7 +4,7 @@ const Footer = () => {
          <h1 className="text-slate-200 flex items-center justify-center">
             <a
                className="underline mr-1"
-               href="https://github.com/psapkale/Gfs23-Module5/tree/main/Trello%20Clone"
+               href="https://github.com/psapkale/react-builds/tree/main/Trello%20Clone"
                target="_blank"
             >
                This

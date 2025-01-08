@@ -15,7 +15,7 @@ const ContainerHolder = () => {
    } = useTasksContainers();
 
    return (
-      <div className="h-[90vh] p-12 bg-purple-600 flex items-start justify-evenly gap-8 overflow-x-scroll trello-scrollbar">
+      <div className="h-[90vh] p-4 md:p-12 bg-purple-600 flex items-start justify-evenly gap-8 overflow-x-scroll trello-scrollbar">
          {tasksContainers.map((container) => (
             <TaskContainer
                key={container.id}
@@ -32,7 +32,7 @@ const ContainerHolder = () => {
             TriggerContentAsComponent={
                <Button
                   variant={"secondary"}
-                  className="min-w-[28vw] opacity-90"
+                  className="min-w-[80vw] sm:min-w-[28vw] opacity-90"
                >
                   <Plus /> Add Another Container
                </Button>

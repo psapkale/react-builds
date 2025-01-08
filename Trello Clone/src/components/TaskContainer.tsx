@@ -51,7 +51,7 @@ const TaskContainer = ({
 
    return (
       <Card
-         className="min-w-[28vw] bg-white"
+         className="min-w-[80vw] sm:min-w-[28vw] bg-white"
          onDrop={handleDrop}
          onDragOver={handleOnDragOver}
       >
