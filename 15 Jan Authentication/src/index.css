@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+   :root {
+      --radius: 0.5rem;
+   }
+}
+
+@keyframes move {
+   0% {
+      transform: translate(0) rotate(0deg);
+   }
+   50% {
+      transform: translate(2%, 2%) rotate(1deg);
+   }
+   100% {
+      transform: translate(0) rotate(0deg);
+   }
+}
+
+.animate-move {
+   animation: move 10s infinite ease-in-out;
+}
