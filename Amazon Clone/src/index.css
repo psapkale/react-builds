@@ -1,1 +1,20 @@
 @import "tailwindcss";
+
+body {
+   background: #e3e6e6;
+   overflow-x: hidden;
+}
+
+.geminiBtn {
+   background-size: 200% auto;
+   background-image: linear-gradient(
+      to right,
+      #84fab0 0%,
+      #8fd3f4 51%,
+      #84fab0 100%
+   );
+}
+
+.geminiBtn:hover {
+   background-position: right center;
+}

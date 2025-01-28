@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import "./App.css";
 import { Slide, ToastContainer } from "react-toastify";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -44,21 +43,6 @@ function App() {
          element: <>Not found!!</>,
       },
    ]);
-
-   useEffect(() => {
-      (async function () {
-         // const res = await axios.get(
-         //    "https://real-time-amazon-data.p.rapidapi.com/products-by-category",
-         //    {
-         //       headers: {
-         //          "x-rapidapi-key": import.meta.env.VITE_RAPID_APIKEY,
-         //          "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
-         //       },
-         //    }
-         // );
-         // console.log(res.data);
-      })();
-   }, []);
 
    return (
       <Provider store={store}>
