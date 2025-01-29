@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fluentui/react-skeleton": "^9.1.25",
+    "@google/generative-ai": "^0.21.0",
     "@reduxjs/toolkit": "^2.5.1",
     "@tailwindcss/postcss": "^4.0.0",
     "axios": "^1.7.9",

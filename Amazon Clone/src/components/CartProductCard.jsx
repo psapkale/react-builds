@@ -3,6 +3,7 @@ import { Minus, Plus, Trash } from "lucide-react";
 import {} from "react";
 import { useDispatch } from "react-redux";
 import { removeItem, updateQuantity } from "../slices/CartSlice";
+import { toast } from "react-toastify";
 
 const CartProductCard = ({ product }) => {
    const dispatch = useDispatch();
@@ -11,15 +12,18 @@ const CartProductCard = ({ product }) => {
 
    const handleIncreaseQuantity = () => {
       dispatch(updateQuantity({ asin: product.asin, operation: "INCREMENT" }));
+      toast.success("Quantity increased");
    };
 
    const handleDecreaseQuantity = () => {
       if (product.quantity === 1) {
          dispatch(removeItem({ asin: product.asin }));
+         toast.success("Product removed from cart");
          return;
       }
 
       dispatch(updateQuantity({ asin: product.asin, operation: "DECREMENT" }));
+      toast.success("Quantity decreased");
    };
 
    return (
