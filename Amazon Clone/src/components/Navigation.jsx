@@ -10,7 +10,7 @@ const Navigation = () => {
    const isLoggedIn = !!userData;
 
    return (
-      <nav className="w-[99vw] bg-[#131921] flex items-center justify-between py-2 px-5 text-white">
+      <nav className="sticky top-0 left-0 w-[99vw] bg-[#131921] flex items-center justify-between py-2 px-5 text-white z-10">
          <div className="w-32 bg-white p-1">
             <img
                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/905px-Amazon_logo.svg.png"

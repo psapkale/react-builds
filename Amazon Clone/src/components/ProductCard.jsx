@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Star } from "lucide-react";
 import {} from "react";
+import { addItem } from "../slices/CartSlice";
+import { useDispatch } from "react-redux";
 
 const ProductCard = ({ product }) => {
+   const dispatch = useDispatch();
    const slicedTitle =
       product.product_title.length < 40
          ? product.product_title
@@ -11,6 +14,10 @@ const ProductCard = ({ product }) => {
       product?.delivery?.length < 40
          ? product.delivery
          : product.delivery?.slice(0, 40) + "...";
+
+   const handleAddToCart = () => {
+      dispatch(addItem(product));
+   };
 
    return (
       <div className="relative border border-slate-100 rounded-md group w-[250px] h-[640px] flex items-center flex-col overflow-hidden">
@@ -64,7 +71,10 @@ const ProductCard = ({ product }) => {
                {slicedDeliveryStatus}
             </span>
             <div className="flex flex-col gap-1">
-               <button className="text-white bg-orange-400 rounded-3xl py-1 px-4 cursor-pointer">
+               <button
+                  className="text-white bg-orange-400 rounded-3xl py-1 px-4 cursor-pointer"
+                  onClick={handleAddToCart}
+               >
                   Add to cart
                </button>
                {/* TODO add Gemini product summary */}
