@@ -1,6 +1,7 @@
 import "./App.css";
 import { Slide, ToastContainer } from "react-toastify";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "react-loading-skeleton/dist/skeleton.css";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import ProductPage from "./pages/ProductPage";
@@ -9,6 +10,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { Provider } from "react-redux";
 import { store } from "../store";
+import SearchResults from "./pages/SearchResults";
 
 function App() {
    const router = createBrowserRouter([
@@ -23,6 +25,10 @@ function App() {
             {
                path: "/p/:productId",
                element: <ProductPage />,
+            },
+            {
+               path: "/s/:query",
+               element: <SearchResults />,
             },
             {
                path: "/checkout",

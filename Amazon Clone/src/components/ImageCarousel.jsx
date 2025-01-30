@@ -8,6 +8,9 @@ const ImageCarousel = () => {
       "https://images-eu.ssl-images-amazon.com/images/G/31/IMG24/Smart_Watches/Nov24/Tall_Hero_3000X1200_Amazfit._CB542432390_.jpg",
       "https://images-eu.ssl-images-amazon.com/images/G/31/prime/ACQ/BAU/PC/Hero/HO/PSE/PSE_PC_3000X1200_T3._CB567196011_.jpg",
       "https://images-eu.ssl-images-amazon.com/images/G/31/img21/MA2025/SSH/PC/2_Men_Prime-3._CB552221141_.jpg",
+      "https://images-eu.ssl-images-amazon.com/images/G/31/IMG24/Smart_Watches/JAN_ART25/Bigbets_ELP/pc_samsung-updated._CB552089167_.jpg",
+      "https://images-eu.ssl-images-amazon.com/images/G/31/img24hp/headphones/DEC_audio/Blaupunkt-GW-PC-3000x1200-Join-Prime._CB552320760_.jpg",
+      "https://images-eu.ssl-images-amazon.com/images/G/31/img24/Media/HeroQ2/toys/Desktop_tall_Hero_3000x1200-Outdoor-toys._CB541369085_.jpg",
    ];
 
    const handlePrev = () => {

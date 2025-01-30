@@ -30,7 +30,7 @@ const GeminiModal = ({
                <span className="text-xs text-blue-500 text-center underline">
                   {product_title}
                </span>
-               {loading ? <span>loading..</span> : <div>{productSummary}</div>}
+               {loading ? <span>Thinking..</span> : <div>{productSummary}</div>}
             </div>
          </div>
       );

@@ -1,23 +1,38 @@
 import { MapPin, SearchIcon, ShoppingCart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocalUser } from "../hooks/useLocalUser";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Navigation = () => {
    const cart = useSelector((store) => store.cart.cart);
+   const [input, setInput] = useState("");
    const { getLocalUser } = useLocalUser();
    const userData = getLocalUser();
    const isLoggedIn = !!userData;
+   const navigate = useNavigate();
+
+   const handleSubmit = (e) => {
+      e.preventDefault();
+
+      if (input.length < 2) {
+         toast.warn("Input is short");
+         return;
+      }
+
+      navigate(`/s/${input.trim()}`);
+   };
 
    return (
       <nav className="sticky top-0 left-0 w-[99vw] bg-[#131921] flex items-center justify-between py-2 px-5 text-white z-10">
-         <div className="w-32 bg-white p-1">
+         <Link to={"/"} className="w-32 bg-white p-1">
             <img
                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/905px-Amazon_logo.svg.png"
                alt="amazon"
                className="w-full"
             />
-         </div>
+         </Link>
          <div className="flex items-center text-white text-xs cursor-pointer gap-1">
             <MapPin className="text-white" />
             <div className="flex flex-col">
@@ -27,19 +42,27 @@ const Navigation = () => {
          </div>
 
          {/* search */}
-         <div className="w-[60%]  border-slate-100 flex items-center justify-center rounded-md overflow-hidden">
+         <form
+            onSubmit={handleSubmit}
+            className="w-[60%]  border-slate-100 flex items-center justify-center rounded-md overflow-hidden"
+         >
             <span className="w-[15%] py-2 bg-slate-500 h-full text-slate-200 px-2 cursor-pointer">
                Amazon
             </span>
             <input
                type="text"
+               value={input}
+               onChange={(e) => setInput(e.target.value)}
                placeholder="Search for products..."
-               className="w-[80%] py-2 bg-white"
+               className="w-[80%] py-2 bg-white text-black px-2"
             />
-            <button className="w-[5%] flex items-center justify-center py-2 bg-[#febd69] cursor-pointer">
+            <button
+               type="submit"
+               className="w-[5%] flex items-center justify-center py-2 bg-[#febd69] cursor-pointer"
+            >
                <SearchIcon className="text-black" />
             </button>
-         </div>
+         </form>
 
          <div className="flex items-center justify-center">
             <img

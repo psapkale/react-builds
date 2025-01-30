@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 
-const FilterCategories = ({ products, setProducts }) => {
-   const [priceFil, setPriceFil] = useState("50-99");
+const FilterCategories = ({ products, setProducts, clearFilters }) => {
+   const [priceFil, setPriceFil] = useState("");
    const [filter, setFilter] = useState();
-   const [rating, setRating] = useState(5);
+   const [rating, setRating] = useState(-1);
 
    const handlePriceFilChange = (key) => {
       setPriceFil(key);
@@ -16,6 +16,13 @@ const FilterCategories = ({ products, setProducts }) => {
 
    const handleRatingChange = (newRating) => {
       setRating(newRating);
+   };
+
+   const handleClearFilters = () => {
+      setPriceFil("");
+      setFilter();
+      setRating(-1);
+      clearFilters();
    };
 
    useEffect(() => {
@@ -74,6 +81,10 @@ const FilterCategories = ({ products, setProducts }) => {
          });
 
          setProducts(newProducts);
+         return;
+      }
+
+      if (rating === -1) {
          return;
       }
 
@@ -212,6 +223,14 @@ const FilterCategories = ({ products, setProducts }) => {
                <label htmlFor="">Higher ratings</label>
             </span>
          </div>
+
+         {/* clear filters */}
+         <button
+            className="border border-slate-400 mt-2 p-1 rounded-full cursor-pointer"
+            onClick={handleClearFilters}
+         >
+            Clear filters
+         </button>
       </div>
    );
 };

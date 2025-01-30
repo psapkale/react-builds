@@ -1,29 +1,28 @@
-import { useEffect, useState } from "react";
-import { p } from "../../utils";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import FilterCategories from "./FilterCategories";
 import ProductCard from "./ProductCard";
+import Skeleton from "react-loading-skeleton";
 
-const FeaturedProducts = () => {
-   const [products, setProducts] = useState(p);
-
-   useEffect(() => {
-      (async function () {
-         // const res = await axios.get(
-         //    "https://real-time-amazon-data.p.rapidapi.com/products-by-category",
-         //    {
-         //       headers: {
-         //          "x-rapidapi-key": import.meta.env.VITE_RAPID_APIKEY,
-         //          "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
-         //       },
-         //    }
-         // );
-         // console.log(res.data);
-      })();
-   }, []);
+const FeaturedProducts = ({
+   forHomePage = false,
+   loading,
+   products,
+   handleClearFilters,
+}) => {
+   const [productsCopy, setProductsCopy] = useState(products);
 
    return (
-      <div className="flex relative -top-[65vh] bg-white min-h-screen">
-         <FilterCategories products={p} setProducts={setProducts} />
+      <div
+         className={`${
+            forHomePage ? "relative -top-[65vh]" : ""
+         } flex bg-white min-h-screen`}
+      >
+         <FilterCategories
+            products={products}
+            setProducts={setProductsCopy}
+            clearFilters={handleClearFilters}
+         />
          <div className="w-[80%] pl-4 my-6">
             <h1 className="font-bold text-2xl">Results</h1>
             <span className="text-gray-800">
@@ -31,8 +30,17 @@ const FeaturedProducts = () => {
                details may vary based on product size and colour.
             </span>
             <div className="w-full my-6 flex flex-wrap items-start justify-evenly gap-2">
-               {products.length ? (
-                  products.map((prod) => (
+               {loading ? (
+                  <div className="w-full mx-auto flex items-center justify-evenly gap-10 flex-wrap">
+                     <Skeleton width={300} height={400} />
+                     <Skeleton width={300} height={400} />
+                     <Skeleton width={300} height={400} />
+                     <Skeleton width={300} height={400} />
+                     <Skeleton width={300} height={400} />
+                     <Skeleton width={300} height={400} />
+                  </div>
+               ) : productsCopy.length ? (
+                  productsCopy.map((prod) => (
                      <ProductCard key={prod.asin} product={prod} />
                   ))
                ) : (
