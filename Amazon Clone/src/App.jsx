@@ -5,7 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import ProductPage from "./pages/ProductPage";
-import Checkout from "./components/Checkout";
+import Checkout from "./pages/Checkout";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { Provider } from "react-redux";
@@ -23,7 +23,7 @@ function App() {
                element: <Home />,
             },
             {
-               path: "/p/:productId",
+               path: "/p/:asin",
                element: <ProductPage />,
             },
             {

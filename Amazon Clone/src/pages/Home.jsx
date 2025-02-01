@@ -2,31 +2,42 @@ import { useEffect, useState } from "react";
 import FeaturedProducts from "../components/FeaturedProducts";
 import HeroProducts from "../components/HeroProducts";
 import ImageCarousel from "../components/ImageCarousel";
-import { p } from "../../utils";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Home = () => {
-   const [products, setProducts] = useState(p);
+   const [products, setProducts] = useState([]);
    const [loading, setLoading] = useState(false);
 
    const handleClearFilters = () => {
-      setProducts(p);
+      fetchProducts();
+   };
+
+   const fetchProducts = async () => {
+      setLoading(true);
+
+      try {
+         const res = await axios.get(
+            "https://real-time-amazon-data.p.rapidapi.com/products-by-category?category_id=172282&page=1",
+            {
+               headers: {
+                  "x-rapidapi-key": import.meta.env.VITE_RAPID_APIKEY,
+                  "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
+               },
+            }
+         );
+
+         setProducts(res.data.data.products);
+         setLoading(false);
+      } catch (error) {
+         console.error(error);
+         toast.error("Error fetching products");
+         setLoading(false);
+      }
    };
 
    useEffect(() => {
-      setLoading(true);
-      (async function () {
-         // const res = await axios.get(
-         //    "https://real-time-amazon-data.p.rapidapi.com/products-by-category",
-         //    {
-         //       headers: {
-         //          "x-rapidapi-key": import.meta.env.VITE_RAPID_APIKEY,
-         //          "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
-         //       },
-         //    }
-         // );
-         // console.log(res.data);
-         setLoading(false);
-      })();
+      fetchProducts();
    }, []);
 
    return (

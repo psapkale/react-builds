@@ -4,31 +4,10 @@ import { useState } from "react";
 import { addItem } from "../slices/CartSlice";
 import { useDispatch } from "react-redux";
 import GeminiModal from "./GeminiModal";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { toast } from "react-toastify";
-
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_APIKEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
-   const prompt = `You are a product description expert tasked with creating a compelling and informative description for the following product based on the provided JSON data. The description should highlight key features, benefits, and reasons why this product is a great deal. Use the JSON data below to craft a medium-length description that includes:
-   - Product Information: Briefly describe the product and its purpose.
-   - Usage: Explain where and how the product can be used.
-   - Why It’s the Best Deal: Highlight pricing, discounts, and any special offers.
-   - Additional Perks: Mention Prime eligibility, Amazon Choice status, delivery options, and sales volume.
-   - Call to Action: Encourage the user to consider purchasing the product.
-   
-   Here is the JSON data for the product in JSON.stringify() format:
-   ${JSON.stringify(product)}
-
-   Instructions for the Description:
-   - Use a professional yet engaging tone.
-   - Ensure the description is concise but covers all key points.
-   - Include a subtle call to action at the end.
-   - Avoid exaggeration and stick to the facts provided in the JSON data.
-   `;
-   const [productSummary, setProductSummary] = useState(product.product_title);
-   const [loading, setLoading] = useState(false);
    const [isOpen, setIsOpen] = useState(false);
    const dispatch = useDispatch();
    const slicedTitle =
@@ -40,43 +19,29 @@ const ProductCard = ({ product }) => {
          ? product.delivery
          : product.delivery?.slice(0, 40) + "...";
 
-   const handleAddToCart = () => {
+   const handleAddToCart = (e) => {
+      e.stopPropagation();
+
       dispatch(addItem(product));
       toast.success("Product added to cart");
    };
 
-   const handleGeminiResponse = async () => {
+   const handleGeminiResponse = () => {
       setIsOpen(true);
-      setLoading(true);
-      const result = await model.generateContent(prompt);
-
-      if (!result) {
-         toast.error("Error generating the summary");
-         setLoading(false);
-         setIsOpen(false);
-         return;
-      }
-
-      setProductSummary(result.response.text());
-      setLoading(false);
    };
 
    return (
       <>
-         <GeminiModal
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            productSummary={productSummary}
-            product_title={product.product_title}
-            loading={loading}
-         />
+         <GeminiModal product={product} isOpen={isOpen} setIsOpen={setIsOpen} />
 
          <div className="relative border border-slate-100 rounded-md group w-[250px] h-[640px] flex items-center flex-col overflow-hidden">
-            <img
-               src={product.product_photo}
-               alt={product.product_title}
-               className="w-full max-h-[400px] pb-2 cursor-pointer"
-            />
+            <Link to={`/p/${product.asin}`}>
+               <img
+                  src={product.product_photo}
+                  alt={product.product_title}
+                  className="w-full max-h-[400px] pb-2 cursor-pointer"
+               />
+            </Link>
 
             {product.is_amazon_choice && !product.is_best_seller && (
                <span className="text-white absolute top-0 left-0 py-1 px-2 text-sm bg-[#002f36]">
@@ -89,9 +54,12 @@ const ProductCard = ({ product }) => {
                </span>
             )}
             <div className="w-full flex items-start flex-col gap-1 py-2 px-1">
-               <h1 className="group-hover:underline text-lg cursor-pointer">
+               <Link
+                  to={`/p/${product.asin}`}
+                  className="group-hover:underline text-lg cursor-pointer"
+               >
                   {slicedTitle}
-               </h1>
+               </Link>
                <span className="flex items-center">
                   {Array(5)
                      .fill("")

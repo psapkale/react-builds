@@ -1,14 +1,26 @@
 import { useSelector } from "react-redux";
-import CartProductCard from "./CartProductCard";
-import { Link } from "react-router-dom";
+import CartProductCard from "../components/CartProductCard";
+import { Link, useNavigate } from "react-router-dom";
+import { useLocalUser } from "../hooks/useLocalUser";
+import { toast } from "react-toastify";
 
 const Checkout = () => {
+   const { getLocalUser } = useLocalUser();
+   const userData = getLocalUser();
    const cartItems = useSelector((s) => s.cart.cart);
    const subTotal = cartItems.reduce((acc, item) => {
       const priceIntoNumber = parseFloat(item.product_price.slice(1));
 
       return acc + priceIntoNumber * item.quantity;
    }, 0);
+   const navigate = useNavigate();
+   console.log(userData);
+
+   if (!userData) {
+      toast.error("Not authenticated");
+      navigate("/login");
+      return;
+   }
 
    return (
       <div>

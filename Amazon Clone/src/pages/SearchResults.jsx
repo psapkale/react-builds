@@ -3,8 +3,11 @@ import FeaturedProducts from "../components/FeaturedProducts";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useLocalUser } from "../hooks/useLocalUser";
 
 const SearchResults = () => {
+   const { getLocalUser } = useLocalUser();
+   const userData = getLocalUser();
    const [products, setProducts] = useState([]);
    const { query } = useParams();
    const navigate = useNavigate();
@@ -40,6 +43,12 @@ const SearchResults = () => {
    useEffect(() => {
       fetchProducts();
    }, []);
+
+   if (!userData) {
+      toast.error("Not authenticated");
+      navigate("/login");
+      return
+   }
 
    return (
       <div>

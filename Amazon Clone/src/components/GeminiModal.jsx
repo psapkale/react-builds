@@ -1,13 +1,51 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { toast } from "react-toastify";
 
-const GeminiModal = ({
-   isOpen,
-   setIsOpen,
-   productSummary,
-   product_title,
-   loading,
-}) => {
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_APIKEY);
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+const GeminiModal = ({ product, isOpen, setIsOpen }) => {
+   const prompt = `You are a product description expert tasked with creating a compelling and informative description for the following product based on the provided JSON data. The description should highlight key features, benefits, and reasons why this product is a great deal. Use the JSON data below to craft a medium-length description that includes:
+   - Product Information: Briefly describe the product and its purpose.
+   - Usage: Explain where and how the product can be used.
+   - Why It’s the Best Deal: Highlight pricing, discounts, and any special offers.
+   - Additional Perks: Mention Prime eligibility, Amazon Choice status, delivery options, and sales volume.
+   - Call to Action: Encourage the user to consider purchasing the product.
+   
+   Here is the JSON data for the product in JSON.stringify() format:
+   ${JSON.stringify(product)}
+
+   Instructions for the Description:
+   - Use a professional yet engaging tone.
+   - Ensure the description is concise but covers all key points.
+   - Include a subtle call to action at the end.
+   - Avoid exaggeration and stick to the facts provided in the JSON data.
+   `;
+   const [loading, setLoading] = useState(false);
+   const [productSummary, setProductSummary] = useState(product.product_title);
+
+   const generateSummary = async () => {
+      setLoading(true);
+      const result = await model.generateContent(prompt);
+
+      if (!result) {
+         toast.error("Error generating the summary");
+         setLoading(false);
+         setIsOpen(false);
+         return;
+      }
+
+      setProductSummary(result.response.text());
+      setLoading(false);
+   };
+
+   useEffect(() => {
+      generateSummary();
+   }, []);
+
    const render = () =>
       isOpen && (
          <div
@@ -28,7 +66,7 @@ const GeminiModal = ({
                   <X className="w-5" />
                </button>
                <span className="text-xs text-blue-500 text-center underline">
-                  {product_title}
+                  {product.product_title}
                </span>
                {loading ? <span>Thinking..</span> : <div>{productSummary}</div>}
             </div>
