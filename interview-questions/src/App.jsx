@@ -3,6 +3,8 @@ import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import Pagination from "./components/Pagination";
 import Countdown from "./components/Countdown";
 import Pagination2 from "./components/Pagination2";
+import TrafficLights from "./components/TrafficLights";
+import Timer from "./components/Timer";
 
 function App() {
    const router = createBrowserRouter([
@@ -19,6 +21,12 @@ function App() {
                <Link to={"/pagination2"} className="underline">
                   Pagination2
                </Link>
+               <Link to={"/traffic-lights"} className="underline">
+                  Traffic Lights
+               </Link>
+               <Link to={"/timer"} className="underline">
+                  Timer
+               </Link>
             </div>
          ),
       },
@@ -33,6 +41,14 @@ function App() {
       {
          path: "/pagination2",
          element: <Pagination2 />,
+      },
+      {
+         path: "/traffic-lights",
+         element: <TrafficLights />,
+      },
+      {
+         path: "/timer",
+         element: <Timer />,
       },
    ]);
 
